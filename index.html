@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vállalkozói Kvíz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            background-color: #003d7a;
+            transform: scale(0.98);
+        }
+
+        #error-count {
+            font-size: 16px;
+            color: red;
+        }
+
+        #answered {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .correct {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .incorrect {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        #success-message {
+            color: green;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #failure-message {
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #celebration {
+            display: none;
+            text-align: center;
+            font-size: 30px;
+            color: #ff0;
+        }
+
+        .fireworks {
+            animation: fireworks 1s infinite;
+        }
+
+        @keyframes fireworks {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Vállalkozói Kvíz</h1>
+        <div id="quiz">
+            <p id="question">Betöltés...</p>
+            <div id="answered">Kérdések válaszolva: 0 / 130</div>
+            <div id="answers"></div>
+            <div id="error-count">Hibák: 0 / 5</div>
+            <button id="next-button" style="display: none;" onclick="nextQuestion()">Tovább</button>
+        </div>
+        <div id="celebration" class="fireworks">
+            🎉🎆 Tűzijáték! Gratulálok a sikeres vizsgához! 🎆🎉
+        </div>
+        <div id="success-message"></div>
+        <div id="failure-message"></div>
+    </div>
+    <script>
+        const questions = [
+            // Itt töltsd fel a kérdéseket
+            // Például:
+            { question: "Mi a vállalkozás definíciója?", options: ["A", "B", "C", "D"], correctAnswer: "A" },
+            { question: "Mik a vállalkozás fő típusai?", options: ["X", "Y", "Z", "W"], correctAnswer: "X" },
+            // stb.
+    {
+        question: "Szociális hozzájárulási adó köteles-e a végkielégítés címén kifizetett illetmény?",
+        options: [
+            "Egyéni vállalkozó, társas vállalkozó részére fizetik ki.",
+            "Nem.",
+            "Igen.",
+            "Csak akkor, ha munkaviszonyban álló részére fizetik."
+        ],
+        correctAnswer: "Nem."
+    },
+    {
+        question: "Mely időpont számít a munkaviszony kezdetének?",
+        options: [
+            "A munkaruha átvételének napja.",
+            "Ha a szerződés másképp nem rendelkezik a munkaszerződés megkötését követő nap.",
+            "A munkaszerződés aláírásnak napja.",
+            "A munkaköri leírás átvételének napja."
+        ],
+        correctAnswer: "Ha a szerződés másképp nem rendelkezik a munkaszerződés megkötését követő nap."
+    },
+    {
+        question: "A társadalombiztosítás rendszerében mi minősül járuléknak az alábbi közbevételek közül?",
+        options: [
+            "Egészségbiztosítási járulék.",
+            "Személyi jövedelemadó.",
+            "Egyszerűsített vállalkozó adó.",
+            "Társasági adó."
+        ],
+        correctAnswer: "Egészségbiztosítási járulék."
+    },
+    {
+        question: "Mikor jár a munkavállalónak munkaközi szünet?",
+        options: [
+            "Akkor, ha a munkaidő a heti 36 órát eléri, vagy meghaladja.",
+            "Akkor, ha ezt a munkaszerződésben lefektetik.",
+            "Minden munkában töltött 3 óra után.",
+            "Akkor, ha a munkaidő a napi 6 órát meghaladja."
+        ],
+        correctAnswer: "Akkor, ha a munkaidő a napi 6 órát meghaladja."
+    },
+    {
+        question: "Alapbérként legalább…",
+        options: [
+            "Az öregségi nyugdíjminimum kétszeresének összegét kell megállapítani.",
+            "Az öregségi nyugdíjminimum háromszorosának megfelelő összeget kell megállapítani.",
+            "A kötelező legkisebb munkabért kell meghatározni.",
+            "A garantált bérminimumot kell meghatározni."
+        ],
+        correctAnswer: "A kötelező legkisebb munkabért kell meghatározni."
+    },
+    {
+        question: "Válassza ki a helyes állítást!",
+        options: [
+            "A felmondás a munkaviszony megszűnésének egyik esete.",
+            "A munkaviszony felmondás esetén a felmondás közlésének napján megszűnik.",
+            "A munkaviszony felmondással megszüntethető.",
+            "A munkaviszony felmondás esetén a felmondás közlésének napját követő napon megszűnik."
+        ],
+        correctAnswer: "A munkaviszony felmondással megszüntethető."
+    },
+    {
+        question: "A teljes napi munkaidő…",
+        options: [
+            "6 óra.",
+            "4 óra.",
+            "10 óra.",
+            "8 óra."
+        ],
+        correctAnswer: "8 óra."
+    },
+    {
+        question: "A munkáltató felmondása esetén a felmondási idő a munkáltatónál munkaviszonyban töltött meghatározott számú évek után…",
+        options: [
+            "Is ugyanannyi marad.",
+            "Csökken.",
+            "Növekszik.",
+            "A másfélszeresére növekszik."
+        ],
+        correctAnswer: "Növekszik."
+    },
+    {
+        question: "Ki minősül az alábbi egyéni vállalkozók közül kiegészítő tevékenységet végzőnek?",
+        options: [
+            "Aki saját jogú nyugdíjas.",
+            "Aki tartósan keresőképtelen.",
+            "Aki rokkantsági nyugdíjas.",
+            "Aki ezt választja és öregségi nyugdíjas."
+        ],
+        correctAnswer: "Aki saját jogú nyugdíjas."
+    }
+];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let errorCount = 0;
+        let answeredQuestions = 0;
+
+        function showQuestion() {
+            const question = questions[currentQuestionIndex];
+            const questionText = document.getElementById("question");
+            const optionsContainer = document.getElementById("answers");
+
+            questionText.textContent = question.question;
+
+            optionsContainer.innerHTML = "";
+            question.options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.onclick = () => {
+                    if (!button.classList.contains("answered")) {
+                        button.classList.add("answered");
+                        checkAnswer(option);
+                    }
+                };
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedOption) {
+            const question = questions[currentQuestionIndex];
+            const optionsContainer = document.getElementById("answers");
+
+            const buttons = optionsContainer.getElementsByTagName("button");
+            for (let i = 0; i < buttons.length; i++) {
+                const button = buttons[i];
+                if (button.textContent === question.correctAnswer) {
+                    button.classList.add("correct");
+                } else if (button.textContent === selectedOption && selectedOption !== question.correctAnswer) {
+                    button.classList.add("incorrect");
+                }
+                button.disabled = true;  // Disable all buttons after selection
+            }
+
+            if (selectedOption === question.correctAnswer) {
+                score++;
+            } else {
+                errorCount++;
+                document.getElementById("error-count").textContent = `Hibák: ${errorCount} / 5`;
+            }
+
+            answeredQuestions++;
+            document.getElementById("answered").textContent = `Kérdések válaszolva: ${answeredQuestions} / ${questions.length}`;
+
+            if (answeredQuestions < questions.length) {
+                document.getElementById("next-button").style.display = "block";
+            } else {
+                showResults();
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+                document.getElementById("next-button").style.display = "none";
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const quizContainer = document.getElementById("quiz-container");
+            let resultText;
+
+            if (errorCount <= 5) {
+                resultText = `<h2 id="success-message">Gratulálok, sikeresen teljesítetted a vizsgát!</h2><div id="celebration">🎉🎆 Tűzijáték! 🎆🎉</div>`;
+            } else {
+                resultText = `<h2 id="failure-message">Sajnos nem sikerült a vizsga! Több mint 5 hibás válasz.</h2>`;
+            }
+
+            quizContainer.innerHTML = resultText;
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>
