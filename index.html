@@ -112,7 +112,7 @@
         <h1>Vállalkozói Kvíz</h1>
         <div id="quiz">
             <p id="question">Betöltés...</p>
-            <div id="answered">Kérdések válaszolva: 0 / 130</div>
+            <div id="answered">Kérdések válaszolva: 0 / 9</div>
             <div id="answers"></div>
             <div id="error-count">Hibák: 0 / 5</div>
             <button id="next-button" style="display: none;" onclick="nextQuestion()">Tovább</button>
@@ -125,99 +125,97 @@
     </div>
     <script>
         const questions = [
-           {
-    "question": "A saját tulajdonú, nem kizárólag üzemi célú személygépkocsi esetében költségként elszámolható az üzemanyagköltségen kívül minden más költség címén",
-    "options": [
-      "a) 9 Ft/km.",
-      "b) 8 Ft/km.",
-      "c) 15 Ft/km.",
-      "d) 5 Ft/km."
-    ],
-    "correctAnswer": "b"
-  },
-  {
-    "question": "Mekkora a társasági adó mértéke? (nyereség után)",
-    "options": [
-      "a) A pozitív adóalap 4%-a.",
-      "b) A pozitív adóalap 7%-a.",
-      "c) A pozitív adóalap 5%-a.",
-      "d) A pozitív adóalap 9%-a."
-    ],
-    "correctAnswer": "d"
-  },
-  {
-    "question": "Mi a számviteli bizonylat?",
-    "options": [
-      "a) Minden olyan külső és belső okmány, amelyet a gazdasági esemény számviteli elszámolását támasztja alá.",
-      "b) Csak az ÁFA törvényben meghatározott tartalommal kiállított számla.",
-      "c) Minden olyan kapott számla, amelyet a mérlegkészítés napjáig a vállalkozás megkap.",
-      "d) Minden olyan külső és belső okmány, amelyet nyomdai úton állítottak elő."
-    ],
-    "correctAnswer": "a"
-  },
-  {
-    "question": "Időnorma fogalma:",
-    "options": [
-      "a) Túlóra.",
-      "b) Meghatározott munkafeladat elvégzéséhez szükséges munkaidő, ésszerű szervezési és vezetési feltételek mellett.",
-      "c) Napi munkaidő.",
-      "d) Meghatározott tevékenység elvégzéséhez szükséges időkeret."
-    ],
-    "correctAnswer": "b"
-  },
-  {
-    "question": "A mérlegben az eszközök és a források",
-    "options": [
-      "a) Csak a zárómérlegben egyenlőek.",
-      "b) Csak a nyitómérlegben egyenlőek.",
-      "c) Mindig egyenlők.",
-      "d) Sohasem egyenlők."
-    ],
-    "correctAnswer": "c"
-  },
-  {
-    "question": "A személygépkocsi beszerzése esetén az adóalany levonhatja az előzetesen felszámított adót…",
-    "options": [
-      "a) Ha a beszerzés nem tovább értékesítési céllal történt.",
-      "b) Az egyéni vállalkozó taxis, meghatározott feltételek mellett.",
-      "c) Ha az adóalany gazdasági tevékenységéhez a személygépkocsi használata feltétlenül szükséges.",
-      "d) Nem vonhatja le."
-    ],
-    "correctAnswer": "c"
-  },
-  {
-    "question": "Az adózónak az adókötelezettségét érintő változását…",
-    "options": [
-      "a) 15 napon belül be kell jelentenie az adóhatóságnak.",
-      "b) 5 napon belül be kell jelentenie az adóhatóságnak.",
-      "c) 3 napon belül be kell jelentenie az adóhatóságnak.",
-      "d) 10 napon belül be kell jelentenie az adóhatóságnak."
-    ],
-    "correctAnswer": "a"
-  },
-  {
-    "question": "Meddig kell benyújtani a bevallást a levont SZJA előlegről?",
-    "options": [
-      "a) A tárgyhónapot követő hó 20-áig.",
-      "b) A tárgyhónapot követő hó 25-éig.",
-      "c) Nem kell benyújtani.",
-      "d) A tárgyhónapot követő hó 12-éig."
-    ],
-    "correctAnswer": "a"
-  },
-  {
-    "question": "A jogosulatlanul benyújtott adó-visszaigénylés esetén…",
-    "options": [
-      "a) Mulasztási bírságot állapít meg.",
-      "b) Önellenőrzésre szólít fel.",
-      "c) Az adóhatóság bírságot állapít meg, ha a kiutalás megtörtént.",
-      "d) Az adóhatóság adóbírságot állapít meg."
-    ],
-    "correctAnswer": "d"
-  }
-
-
-];
+            {
+                question: "Szociális hozzájárulási adó köteles-e a végkielégítés címén kifizetett illetmény?",
+                options: [
+                    "Egyéni vállalkozó, társas vállalkozó részére fizetik ki.",
+                    "Nem.",
+                    "Igen.",
+                    "Csak akkor, ha munkaviszonyban álló részére fizetik."
+                ],
+                correctAnswer: "Nem."
+            },
+            {
+                question: "Mely időpont számít a munkaviszony kezdetének?",
+                options: [
+                    "A munkaruha átvételének napja.",
+                    "Ha a szerződés másképp nem rendelkezik a munkaszerződés megkötését követő nap.",
+                    "A munkaszerződés aláírásnak napja.",
+                    "A munkaköri leírás átvételének napja."
+                ],
+                correctAnswer: "Ha a szerződés másképp nem rendelkezik a munkaszerződés megkötését követő nap."
+            },
+            {
+                question: "A társadalombiztosítás rendszerében mi minősül járuléknak az alábbi közbevételek közül?",
+                options: [
+                    "Egészségbiztosítási járulék.",
+                    "Személyi jövedelemadó.",
+                    "Egyszerűsített vállalkozó adó.",
+                    "Társasági adó."
+                ],
+                correctAnswer: "Egészségbiztosítási járulék."
+            },
+            {
+                question: "Mikor jár a munkavállalónak munkaközi szünet?",
+                options: [
+                    "Akkor, ha a munkaidő a heti 36 órát eléri, vagy meghaladja.",
+                    "Akkor, ha ezt a munkaszerződésben lefektetik.",
+                    "Minden munkában töltött 3 óra után.",
+                    "Akkor, ha a munkaidő a napi 6 órát meghaladja."
+                ],
+                correctAnswer: "Akkor, ha a munkaidő a napi 6 órát meghaladja."
+            },
+            {
+                question: "Alapbérként legalább…",
+                options: [
+                    "Az öregségi nyugdíjminimum kétszeresének összegét kell megállapítani.",
+                    "Az öregségi nyugdíjminimum háromszorosának megfelelő összeget kell megállapítani.",
+                    "A kötelező legkisebb munkabért kell meghatározni.",
+                    "A garantált bérminimumot kell meghatározni."
+                ],
+                correctAnswer: "A kötelező legkisebb munkabért kell meghatározni."
+            },
+            {
+                question: "Válassza ki a helyes állítást!",
+                options: [
+                    "A felmondás a munkaviszony megszűnésének egyik esete.",
+                    "A munkaviszony felmondás esetén a felmondás közlésének napján megszűnik.",
+                    "A munkaviszony felmondással megszüntethető.",
+                    "A munkaviszony felmondás esetén a felmondás közlésének napját követő napon megszűnik."
+                ],
+                correctAnswer: "A munkaviszony felmondással megszüntethető."
+            },
+            {
+                question: "A teljes napi munkaidő…",
+                options: [
+                    "6 óra.",
+                    "4 óra.",
+                    "10 óra.",
+                    "8 óra."
+                ],
+                correctAnswer: "8 óra."
+            },
+            {
+                question: "A munkáltató felmondása esetén a felmondási idő a munkáltatónál munkaviszonyban töltött meghatározott számú évek után…",
+                options: [
+                    "Is ugyanannyi marad.",
+                    "Csökken.",
+                    "Növekszik.",
+                    "A másfélszeresére növekszik."
+                ],
+                correctAnswer: "Növekszik."
+            },
+            {
+                question: "Ki minősül az alábbi egyéni vállalkozók közül kiegészítő tevékenységet végzőnek?",
+                options: [
+                    "Aki saját jogú nyugdíjas.",
+                    "Aki tartósan keresőképtelen.",
+                    "Aki rokkantsági nyugdíjas.",
+                    "Aki ezt választja és öregségi nyugdíjas."
+                ],
+                correctAnswer: "Aki saját jogú nyugdíjas."
+            }
+        ];
 
         let currentQuestionIndex = 0;
         let score = 0;
@@ -253,54 +251,4 @@
             for (let i = 0; i < buttons.length; i++) {
                 const button = buttons[i];
                 if (button.textContent === question.correctAnswer) {
-                    button.classList.add("correct");
-                } else if (button.textContent === selectedOption && selectedOption !== question.correctAnswer) {
-                    button.classList.add("incorrect");
-                }
-                button.disabled = true;  // Disable all buttons after selection
-            }
-
-            if (selectedOption === question.correctAnswer) {
-                score++;
-            } else {
-                errorCount++;
-                document.getElementById("error-count").textContent = `Hibák: ${errorCount} / 5`;
-            }
-
-            answeredQuestions++;
-            document.getElementById("answered").textContent = `Kérdések válaszolva: ${answeredQuestions} / ${questions.length}`;
-
-            if (answeredQuestions < questions.length) {
-                document.getElementById("next-button").style.display = "block";
-            } else {
-                showResults();
-            }
-        }
-
-        function nextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                showQuestion();
-                document.getElementById("next-button").style.display = "none";
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            const quizContainer = document.getElementById("quiz-container");
-            let resultText;
-
-            if (errorCount <= 5) {
-                resultText = `<h2 id="success-message">Gratulálok, sikeresen teljesítetted a vizsgát!</h2><div id="celebration">🎉🎆 Tűzijáték! 🎆🎉</div>`;
-            } else {
-                resultText = `<h2 id="failure-message">Sajnos nem sikerült a vizsga! Több mint 5 hibás válasz.</h2>`;
-            }
-
-            quizContainer.innerHTML = resultText;
-        }
-
-        showQuestion();
-    </script>
-</body>
-</html>
+                    button.classList.add("correct
