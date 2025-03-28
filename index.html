@@ -3,252 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vállalkozói Kvíz</title>
+    <title>Adózási Kvíz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-
-        #quiz-container {
-            max-width: 600px;
-            margin: 50px auto;
-            background: white;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        #question {
-            font-size: 18px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-        }
-
-        button {
-            display: block;
-            width: 100%;
+            margin: 20px;
             padding: 10px;
-            margin: 5px 0;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
+            background-color: #f4f4f9;
         }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        button:active {
-            background-color: #003d7a;
-            transform: scale(0.98);
-        }
-
-        #error-count {
-            font-size: 16px;
-            color: red;
-        }
-
-        #answered {
-            font-size: 16px;
+        .question {
             margin-bottom: 20px;
         }
-
-        .correct {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .incorrect {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        #success-message {
-            color: green;
-            font-size: 20px;
+        .question p {
             font-weight: bold;
         }
-
-        #failure-message {
-            color: red;
-            font-size: 20px;
+        .options {
+            margin-top: 10px;
+        }
+        .options label {
+            display: block;
+            margin: 5px 0;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
             font-weight: bold;
         }
-
-        #celebration {
-            display: none;
-            text-align: center;
-            font-size: 30px;
-            color: #ff0;
-        }
-
-        .fireworks {
-            animation: fireworks 1s infinite;
-        }
-
-        @keyframes fireworks {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
     </style>
 </head>
 <body>
-    <div id="quiz-container">
-        <h1>Vállalkozói Kvíz</h1>
-        <div id="quiz">
-            <p id="question">Betöltés...</p>
-            <div id="answered">Kérdések válaszolva: 0 / 9</div>
-            <div id="answers"></div>
-            <div id="error-count">Hibák: 0 / 5</div>
-            <button id="next-button" style="display: none;" onclick="nextQuestion()">Tovább</button>
-        </div>
-        <div id="celebration" class="fireworks">
-            🎉🎆 Tűzijáték! Gratulálok a sikeres vizsgához! 🎆🎉
-        </div>
-        <div id="success-message"></div>
-        <div id="failure-message"></div>
-    </div>
+
+    <h1>Adózási Kvíz</h1>
+    <form id="quizForm">
+        <!-- A kérdések és válaszok itt kerülnek dinamikusan feltöltésre -->
+    </form>
+    
+    <button class="button" onclick="submitQuiz()">Kvíz Beküldése</button>
+    <div class="result" id="result"></div>
+
     <script>
         const questions = [
             {
-                question: "Szociális hozzájárulási adó köteles-e a végkielégítés címén kifizetett illetmény?",
-                options: [
-                    "Egyéni vállalkozó, társas vállalkozó részére fizetik ki.",
-                    "Nem.",
-                    "Igen.",
-                    "Csak akkor, ha munkaviszonyban álló részére fizetik."
-                ],
-                correctAnswer: "Nem."
+                question: "A saját tulajdonú, nem kizárólag üzemi célú személygépkocsi esetében költségként elszámolható az üzemanyagköltségen kívül minden más költség címén",
+                options: ["9 Ft/km.", "8 Ft/km.", "15 Ft/km.", "5 Ft/km."],
+                correctAnswer: "9 Ft/km."
             },
             {
-                question: "Mely időpont számít a munkaviszony kezdetének?",
-                options: [
-                    "A munkaruha átvételének napja.",
-                    "Ha a szerződés másképp nem rendelkezik a munkaszerződés megkötését követő nap.",
-                    "A munkaszerződés aláírásnak napja.",
-                    "A munkaköri leírás átvételének napja."
-                ],
-                correctAnswer: "Ha a szerződés másképp nem rendelkezik a munkaszerződés megkötését követő nap."
+                question: "Mekkora a társasági adó mértéke? (nyereség után)",
+                options: ["A pozitív adóalap 4%-a.", "A pozitív adóalap 7%-a.", "A pozitív adóalap 5%-a.", "A pozitív adóalap 9%-a."],
+                correctAnswer: "A pozitív adóalap 9%-a."
             },
             {
-                question: "A társadalombiztosítás rendszerében mi minősül járuléknak az alábbi közbevételek közül?",
+                question: "Mi a számviteli bizonylat?",
                 options: [
-                    "Egészségbiztosítási járulék.",
-                    "Személyi jövedelemadó.",
-                    "Egyszerűsített vállalkozó adó.",
-                    "Társasági adó."
+                    "Minden olyan külső és belső okmány, amelyet a gazdasági esemény számviteli elszámolását támasztja alá.",
+                    "Csak az ÁFA törvényben meghatározott tartalommal kiállított számla.",
+                    "Minden olyan kapott számla, amelyet a mérlegkészítés napjáig a vállalkozás megkap.",
+                    "Minden olyan külső és belső okmány, amelyet nyomdai úton állítottak elő."
                 ],
-                correctAnswer: "Egészségbiztosítási járulék."
+                correctAnswer: "Minden olyan külső és belső okmány, amelyet a gazdasági esemény számviteli elszámolását támasztja alá."
             },
             {
-                question: "Mikor jár a munkavállalónak munkaközi szünet?",
+                question: "Időnorma fogalma:",
                 options: [
-                    "Akkor, ha a munkaidő a heti 36 órát eléri, vagy meghaladja.",
-                    "Akkor, ha ezt a munkaszerződésben lefektetik.",
-                    "Minden munkában töltött 3 óra után.",
-                    "Akkor, ha a munkaidő a napi 6 órát meghaladja."
+                    "Túlóra.",
+                    "Meghatározott munkafeladat elvégzéséhez szükséges munkaidő, ésszerű szervezési és vezetési feltételek mellett.",
+                    "Napi munkaidő.",
+                    "Meghatározott tevékenység elvégzéséhez szükséges időkeret."
                 ],
-                correctAnswer: "Akkor, ha a munkaidő a napi 6 órát meghaladja."
+                correctAnswer: "Meghatározott munkafeladat elvégzéséhez szükséges munkaidő, ésszerű szervezési és vezetési feltételek mellett."
             },
             {
-                question: "Alapbérként legalább…",
-                options: [
-                    "Az öregségi nyugdíjminimum kétszeresének összegét kell megállapítani.",
-                    "Az öregségi nyugdíjminimum háromszorosának megfelelő összeget kell megállapítani.",
-                    "A kötelező legkisebb munkabért kell meghatározni.",
-                    "A garantált bérminimumot kell meghatározni."
-                ],
-                correctAnswer: "A kötelező legkisebb munkabért kell meghatározni."
+                question: "A mérlegben az eszközök és a források",
+                options: ["Csak a zárómérlegben egyenlőek.", "Csak a nyitómérlegben egyenlőek.", "Mindig egyenlők.", "Sohasem egyenlők."],
+                correctAnswer: "Mindig egyenlők."
             },
             {
-                question: "Válassza ki a helyes állítást!",
+                question: "A személygépkocsi beszerzése esetén az adóalany levonhatja az előzetesen felszámított adót…",
                 options: [
-                    "A felmondás a munkaviszony megszűnésének egyik esete.",
-                    "A munkaviszony felmondás esetén a felmondás közlésének napján megszűnik.",
-                    "A munkaviszony felmondással megszüntethető.",
-                    "A munkaviszony felmondás esetén a felmondás közlésének napját követő napon megszűnik."
+                    "Ha a beszerzés nem tovább értékesítési céllal történt.",
+                    "Az egyéni vállalkozó taxis, meghatározott feltételek mellett.",
+                    "Ha az adóalany gazdasági tevékenységéhez a személygépkocsi használata feltétlenül szükséges.",
+                    "Nem vonhatja le."
                 ],
-                correctAnswer: "A munkaviszony felmondással megszüntethető."
+                correctAnswer: "Ha az adóalany gazdasági tevékenységéhez a személygépkocsi használata feltétlenül szükséges."
             },
             {
-                question: "A teljes napi munkaidő…",
+                question: "Az adózónak az adókötelezettségét érintő változását…",
                 options: [
-                    "6 óra.",
-                    "4 óra.",
-                    "10 óra.",
-                    "8 óra."
+                    "15 napon belül be kell jelentenie az adóhatóságnak.",
+                    "5 napon belül be kell jelentenie az adóhatóságnak.",
+                    "3 napon belül be kell jelentenie az adóhatóságnak.",
+                    "10 napon belül be kell jelentenie az adóhatóságnak."
                 ],
-                correctAnswer: "8 óra."
+                correctAnswer: "15 napon belül be kell jelentenie az adóhatóságnak."
             },
             {
-                question: "A munkáltató felmondása esetén a felmondási idő a munkáltatónál munkaviszonyban töltött meghatározott számú évek után…",
-                options: [
-                    "Is ugyanannyi marad.",
-                    "Csökken.",
-                    "Növekszik.",
-                    "A másfélszeresére növekszik."
-                ],
-                correctAnswer: "Növekszik."
+                question: "Meddig kell benyújtani a bevallást a levont SZJA előlegről?",
+                options: ["A tárgyhónapot követő hó 20-áig.", "A tárgyhónapot követő hó 25-éig.", "Nem kell benyújtani.", "A tárgyhónapot követő hó 12-éig."],
+                correctAnswer: "A tárgyhónapot követő hó 20-áig."
             },
             {
-                question: "Ki minősül az alábbi egyéni vállalkozók közül kiegészítő tevékenységet végzőnek?",
+                question: "A jogosulatlanul benyújtott adó-visszaigénylés esetén…",
                 options: [
-                    "Aki saját jogú nyugdíjas.",
-                    "Aki tartósan keresőképtelen.",
-                    "Aki rokkantsági nyugdíjas.",
-                    "Aki ezt választja és öregségi nyugdíjas."
+                    "Mulasztási bírságot állapít meg.",
+                    "Önellenőrzésre szólít fel.",
+                    "Az adóhatóság bírságot állapít meg, ha a kiutalás megtörtént.",
+                    "Az adóhatóság adóbírságot állapít meg."
                 ],
-                correctAnswer: "Aki saját jogú nyugdíjas."
+                correctAnswer: "Az adóhatóság adóbírságot állapít meg."
             }
         ];
 
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let errorCount = 0;
-        let answeredQuestions = 0;
+        // Generating the quiz questions and answers dynamically
+        const quizForm = document.getElementById('quizForm');
+        questions.forEach((question, index) => {
+            const questionElement = document.createElement('div');
+            questionElement.classList.add('question');
+            questionElement.innerHTML = `
+                <p>${index + 1}. ${question.question}</p>
+                <div class="options">
+                    ${question.options.map((option, i) => `
+                        <label>
+                            <input type="radio" name="q${index}" value="${option}"> ${option}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            quizForm.appendChild(questionElement);
+        });
 
-        function showQuestion() {
-            const question = questions[currentQuestionIndex];
-            const questionText = document.getElementById("question");
-            const optionsContainer = document.getElementById("answers");
-
-            questionText.textContent = question.question;
-
-            optionsContainer.innerHTML = "";
-            question.options.forEach(option => {
-                const button = document.createElement("button");
-                button.textContent = option;
-                button.onclick = () => {
-                    if (!button.classList.contains("answered")) {
-                        button.classList.add("answered");
-                        checkAnswer(option);
-                    }
-                };
-                optionsContainer.appendChild(button);
+        // Function to submit the quiz and check the answers
+        function submitQuiz() {
+            let score = 0;
+            questions.forEach((question, index) => {
+                const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selectedOption && selectedOption.value === question.correctAnswer) {
+                    score++;
+                }
             });
+
+            const result = document.getElementById('result');
+            result.textContent = `Eredmény: ${score} / ${questions.length} helyes válasz!`;
         }
-
-        function checkAnswer(selectedOption) {
-            const question = questions[currentQuestionIndex];
-            const optionsContainer = document.getElementById("answers");
-
-            const buttons = optionsContainer.getElementsByTagName("button");
-            for (let i = 0; i < buttons.length; i++) {
-                const button = buttons[i];
-                if (button.textContent === question.correctAnswer) {
-                    button.classList.add("correct
+    </script>
+</body>
+</html>
